@@ -1,13 +1,15 @@
 package Assignment1;
+import java.math.BigInteger;
 import java.util.*;
 public class fib{
-    public static int fibonacciUsingRecursion(int n){
-        if(n == 1)
-        return 0;
-        else if(n == 2 || n == 3)
-        return 1;
-
-        return fibonacciUsingRecursion(n-1) + fibonacciUsingRecursion(n-2);
+    static HashMap<Integer,BigInteger>map = new HashMap<>();
+    static int n,k = 1;
+    public static BigInteger fibonacciUsingRecursion(int n){
+        if(!map.containsKey(n)){
+            BigInteger a = fibonacciUsingRecursion(n-1),b = fibonacciUsingRecursion(n-2);
+            map.put(n,a.add(b));
+        }
+        return map.get(n);
     }
     public static void recursion(int n,int m){
         if(n >= m){
@@ -15,21 +17,28 @@ public class fib{
             recursion(n,m+1);
         }
     }
-    public static int fibocacciUsingLoop(int n){
-        int fib[] = new int[n+1];
-        fib[0]=0;
-        fib[1]=1;
-
-        for(int i=2;i<=n;i++){
-            fib[i] = fib[i-1] + fib[i-2];
-        }
-        return fib[n];
-    }
     public static void main(String args[]){
         Scanner s = new Scanner(System.in);
-        int n = s.nextInt();
-        // System.out.println(fibonacciUsingRecursion(n)+"");
-        recursion(n,1);
+        map.put(1,BigInteger.valueOf(0));
+        map.put(2,BigInteger.valueOf(1));
+        boolean val = false;
+        while(true){
+            System.out.println("Enter the number:");
+            String str = s.nextLine();
+            String temp = str.replaceAll("[^0-9]", "");
+            if(temp.length() == str.length()){
+                if(val){
+                    k = n + 1;
+                }
+                n += Integer.parseInt(str);
+                val = true;
+                recursion(n,k);
+                System.out.println();
+            }
+            else{
+                break;
+            }
+        }
         s.close();
     }
 }
