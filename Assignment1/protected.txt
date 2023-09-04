@@ -1,0 +1,4 @@
+When protected access specifier is used, the class can be accessed
+if they are present in the same package.
+here the class is within the same package so that the variable can 
+be modified.

@@ -74,5 +74,6 @@ public class maskPattern {
         int n = s.nextInt();
         maskPatternUsingLoops(n);
         maskPatternUsingRecursion(n);
+        s.close();
     }
 }
