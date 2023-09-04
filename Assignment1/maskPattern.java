@@ -37,40 +37,28 @@ public class maskPattern {
         }
         System.out.println();
     }
-    public static void printStar(int i,int n){
+    public static void print(int i,int n,char symbol){
         if(i < n){
-            System.out.print("*");
-            printStar(i+1, n);
-        }
-    }
-    public static void printMinus(int i,int n){
-        if(i < n){
-            System.out.print("-");
-            printMinus(i+1, n);
-        }
-    }
-    public static void printSpace(int i,int n){
-        if(i < n){
-            System.out.print(" ");
-            printSpace(i+1, n);
+            System.out.print(symbol);
+            print(i+1, n,symbol);
         }
     }
     public static void upperBlock(int i,int n){
         if(i < n){
-            printStar(0,i+1);
-            printSpace(i,n-1);
-            printSpace(i,n-1);
-            printStar(0,i+1);
+            print(0,i+1,'*');
+            print(i,n-1,' ');
+            print(i,n-1,' ');
+            print(0,i+1,'*');
             System.out.println();
             upperBlock(i+1, n);
         }
     }
     public static void lowerBlock(int i,int n){
         if(i < n){
-            printMinus(i, n);
-            printSpace(0,i);
-            printSpace(0,i);
-            printMinus(i,n);
+            print(i, n,'-');
+            print(0,i,' ');
+            print(0,i,' ');
+            print(i,n,'-');
             System.out.println();
             lowerBlock(i+1, n);
         }
