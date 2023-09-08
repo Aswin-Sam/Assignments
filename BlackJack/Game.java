@@ -35,11 +35,10 @@ public class Game implements Deck {
         System.out.println("You get a " + valueOfCard1 + " and a " + valueOfCard2);
         System.out.println("Your total is " + playerTotal);
         System.out.println();
-        if(playerTotal == 21){
+        if (playerTotal == 21) {
             System.out.println("YOU WON!!!");
             playerWon = true;
-        }
-        else{
+        } else {
             valueOfCard1 = cards.remove(cards.size() - 1).value;
             Integer hiddenCard = cards.get(cards.size() - 2).value;
             dealerTotal += valueOfCard1 + hiddenCard;
@@ -71,6 +70,10 @@ public class Game implements Deck {
                     System.out.println("You drew a " + valueOfCard1);
                     System.out.println("Your total is " + playerTotal);
                 }
+                else if(!choice.equals("hit") && !choice.equals("stay")){
+                    System.out.println("Enter a proper choice");
+                    continue;
+                }
                 if (playerTotal == 21) {
                     System.out.println();
                     System.out.println("YOU WON!!!");
@@ -92,7 +95,7 @@ public class Game implements Deck {
                 System.out.println("His total was " + dealerTotal);
                 System.out.println();
 
-                while (dealerTotal <= 16) {
+                while (dealerTotal < playerTotal && dealerTotal < 21) {
                     System.out.println("Dealer chooses to hit");
                     valueOfCard1 = cards.get(cards.size() - 1).value;
                     dealerTotal += valueOfCard1;
@@ -123,6 +126,8 @@ public class Game implements Deck {
 
                     if (dealerTotal > playerTotal) {
                         System.out.println("DEALER WON!!!");
+                    } else if (dealerTotal == playerTotal) {
+                        System.out.println("It's a TIE!!!");
                     } else {
                         System.out.println("YOU WON!!!");
                     }
