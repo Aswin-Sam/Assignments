@@ -2,7 +2,12 @@ package BlackJack;
 
 import java.util.ArrayList;
 
-public interface Deck {
+public class Deck {
     ArrayList<Card>cards = new ArrayList<>();
-    void addCards();
+    Deck(){
+    	Card.addCards(cards, "Club");
+    	Card.addCards(cards, "Diamond");
+    	Card.addCards(cards, "Spade");
+    	Card.addCards(cards, "Heart");
+    }
 }
