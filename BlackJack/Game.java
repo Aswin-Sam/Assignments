@@ -78,7 +78,7 @@ public class Game implements BlackJack {
             System.out.println("The Dealer has a " + valueOfCard1 + " showing and a hidden card.");
             System.out.println("His total is hidden, too.");
             String choice = "";
-
+        //TIME-COMPLEXITY --->  O(n);
             while (!choice.equals("stay")) {
                 System.out.println("Would you like to \"hit\" or \"stay\"?");
                 choice = getChoice();
@@ -113,7 +113,7 @@ public class Game implements BlackJack {
                 System.out.println("His hidden card was a " + hiddenCard);
                 System.out.println("His total was " + dealerTotal);
                 System.out.println();
-
+                // TIME-COMPLEXITY --->  O(n)
                 while (dealerTotal < playerTotal && dealerTotal < winningValue) {
                     System.out.println("Dealer chooses to hit");
                     valueOfCard1 = getCardValue(drawCard(), "Dealer");
