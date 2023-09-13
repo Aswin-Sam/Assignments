@@ -250,7 +250,7 @@ public class CircularDoublyLinkedList {
     }
 
     void insert(Integer position, Integer val) {
-        if (position > size) {
+        if (position > size || position < 1) {
             System.out.println("ENTER A VALID POSITION");
         }
         else if(position == 1){

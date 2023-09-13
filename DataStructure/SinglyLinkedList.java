@@ -90,7 +90,7 @@ public class SinglyLinkedList {
     }
 
     void insert(Integer position, Integer val) {
-        if (position > size) {
+        if (position > size || position < 1) {
             System.out.println("ENTER A VALID POSITION");
             return;
         } 
@@ -116,14 +116,101 @@ public class SinglyLinkedList {
     void swap(Integer element1,Integer element2){
         Node firstElement = head, secondElement = head;
 
-        while (firstElement.data != element1) {
+        while (firstElement != null && firstElement.data != element1) {
             firstElement = firstElement.next;
         }
-        while (secondElement.data != element2) {
+        while (secondElement != null && secondElement.data != element2) {
             secondElement = secondElement.next;
         }
 
+        if(firstElement == head && secondElement.next == null){
+            Node temp = head;
 
+            while(temp.next.next != null){
+                temp = temp.next;
+            }
+            secondElement.next = firstElement.next;
+            firstElement.next = null;
+
+            temp.next = firstElement;
+
+            head = secondElement;
+        }
+        else if(firstElement == head && firstElement.next == secondElement){
+            firstElement.next = secondElement.next;
+            secondElement.next = firstElement;
+            head = secondElement;
+        }
+        else if(firstElement.next.next == null && secondElement.next == null){
+            Node temp = head;
+
+            while(temp.next.data != firstElement.data){
+                temp = temp.next;
+            }
+
+            temp.next = secondElement;
+            secondElement.next = firstElement;
+            firstElement.next = null;
+        }
+        else if(firstElement == head){
+            Node temp1 = head,temp2 = head.next;
+            while(temp1.next.data != secondElement.data){
+                temp1 = temp1.next;
+            }
+
+            temp1.next = firstElement;
+            firstElement.next = secondElement.next;
+            secondElement.next = temp2;
+
+            head = secondElement;
+        }
+        else if(secondElement.next == null){
+            Node temp1 = head,temp2 = head;
+
+            while(temp1.next.data != firstElement.data){
+                temp1 = temp1.next;
+            }
+
+            while(temp2.next.next != null){
+                temp2 = temp2.next;
+            }
+
+            temp1.next = secondElement;
+            secondElement.next = firstElement.next;
+            firstElement.next = null;
+            temp2.next = firstElement;
+        }
+        else{
+            if(firstElement.next == secondElement){
+                Node temp1 = head;
+
+                while(temp1.next.data != firstElement.data){
+                    temp1 = temp1.next;
+                }
+
+                firstElement.next = secondElement.next;
+                temp1.next = secondElement;
+                secondElement.next = firstElement;
+            }
+            else{
+                Node temp1 = head,temp2 = head;
+
+                while(temp1.next.data != firstElement.data){
+                    temp1 = temp1.next;
+                }
+
+                while(temp2.next.data != secondElement.data){
+                    temp2 = temp2.next;
+                }
+
+                Node temp3 = firstElement.next;
+
+                firstElement.next = secondElement.next;
+                temp2.next = firstElement;
+                temp1.next = secondElement;
+                secondElement.next = temp3;
+            }
+        }
     }
 
     void display() {
@@ -143,7 +230,7 @@ public class SinglyLinkedList {
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{
-            System.out.println("1.INSERT   2.DELETE   3.FIND   4.DISPLAY   5.REVERSE   6.INSERT_AT   7.EXIT");
+            System.out.println("1.INSERT   2.DELETE   3.FIND   4.DISPLAY   5.REVERSE   6.INSERT_AT   7.SWAP   8.EXIT");
             choice = s.nextInt();
 
             switch(choice){
@@ -185,10 +272,17 @@ public class SinglyLinkedList {
                     l1.insert(position, input);
                     break;
                 case 7:
+                    System.out.println("ENTER THE ELEMENTS TO BE SWAPPED");
+                    Integer position1 = s.nextInt(),position2 = s.nextInt();
+                    l1.swap(position1, position2);
+                    l1.display();
+                    System.out.println();
+                    break;
+                case 8:
                     break;
             }
         }
-        while(choice != 7);
+        while(choice != 8);
         s.close();
     }
 }

@@ -106,7 +106,7 @@ public class DoublyLinkedList {
     }
 
     void insert(Integer position, Integer val) {
-        if (position > size) {
+        if (position > size || position < 1) {
             System.out.println("ENTER A VALID POSITION");
         } else {
             Node newNode = new Node(val);
@@ -120,6 +120,118 @@ public class DoublyLinkedList {
             newNode.prev = temp;
             size++;
             System.out.println("THE ELEMENT HAS BEEN INSERTED");
+        }
+    }
+
+    void swap(Integer element1,Integer element2){
+        Node firstElement = head,secondElement = head;
+
+        while (firstElement != null && firstElement.data != element1) {
+            firstElement = firstElement.next;
+        }
+        while (secondElement != null && secondElement.data != element2) {
+            secondElement = secondElement.next;
+        }
+
+        if(firstElement == head && secondElement == tail){
+            Node temp1 = secondElement.prev;
+            Node temp2 = firstElement.next;
+
+            temp1.next = firstElement;
+            firstElement.next = null;
+            firstElement.prev = temp1;
+
+            secondElement.next = temp2;
+            temp2.prev = secondElement;
+            secondElement.prev = null;
+
+            head = secondElement;
+            tail = firstElement;
+        }
+        else if(firstElement == head && secondElement == head.next){
+            Node temp1 = secondElement.next;
+            
+            firstElement.next = temp1;
+            secondElement.next = firstElement;
+            firstElement.prev = secondElement;
+            temp1.prev = firstElement;
+
+            head = secondElement;
+        }
+        else if(secondElement == tail && firstElement.next == tail){
+            Node temp1 = firstElement.prev;
+
+            secondElement.prev = temp1;
+            secondElement.next = firstElement;
+            temp1.next = secondElement;
+            firstElement.prev = secondElement;
+            firstElement.next = null;
+            tail = firstElement;
+        }
+        else if(firstElement == head){
+            Node temp1 = firstElement.next;
+            Node temp2 = secondElement.prev;
+            Node temp3 = secondElement.next;
+
+            firstElement.next = temp3;
+            firstElement.prev = temp2;
+            temp2.next = firstElement;
+            temp3.prev = firstElement;
+
+            secondElement.next = temp1;
+            secondElement.prev = null;
+            temp1.prev = secondElement;
+
+            head = secondElement;
+        }
+        else if(secondElement == tail){
+            Node temp1 = firstElement.next;
+            Node temp2 = firstElement.prev;
+            Node temp3 = secondElement.prev;
+
+            secondElement.next = temp1;
+            secondElement.prev = temp2;
+            temp1.prev = secondElement;
+            temp2.next = secondElement;
+
+            firstElement.prev = temp3;
+            temp3.next = firstElement;
+            firstElement.next = null;
+
+            tail = firstElement;
+        }
+        else{
+            if(firstElement.next == secondElement){
+                Node temp1 = secondElement;
+                Node temp2 = firstElement.prev;
+                Node temp3 = secondElement.next;
+
+                firstElement.next = temp3;
+                firstElement.prev = secondElement;
+                temp3.prev = firstElement;
+                temp1.next = firstElement;
+
+                secondElement.next = firstElement;
+                secondElement.prev = temp2;
+                temp2.next = secondElement;
+                firstElement.prev = secondElement;
+            }
+            else{
+                Node temp1 = firstElement.next;
+                Node temp2 = firstElement.prev;
+                Node temp3 = secondElement.next;
+                Node temp4 = secondElement.prev;
+
+                firstElement.next = temp3;
+                firstElement.prev = temp4;
+                temp3.prev = firstElement;
+                temp4.next = firstElement;
+                
+                secondElement.next = temp1;
+                secondElement.prev = temp2;
+                temp1.prev = secondElement;
+                temp2.next = secondElement;
+            }
         }
     }
 
@@ -144,7 +256,7 @@ public class DoublyLinkedList {
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{
-            System.out.println("1.INSERT   2.DELETE   3.FIND   4.DISPLAY   5.REVERSE   6.INSERT_AT   7.EXIT");
+            System.out.println("1.INSERT   2.DELETE   3.FIND   4.DISPLAY   5.REVERSE   6.INSERT_AT   7.SWAP   8.EXIT");
             choice = s.nextInt();
 
             switch(choice){
@@ -186,10 +298,17 @@ public class DoublyLinkedList {
                     l1.insert(position, input);
                     break;
                 case 7:
+                    System.out.println("ENTER THE ELEMENTS TO BE SWAPPED");
+                    Integer position1 = s.nextInt(),position2 = s.nextInt();
+                    l1.swap(position1, position2);
+                    l1.display();
+                    System.out.println();
+                    break;
+                case 8:
                     break;
             }
         }
-        while(choice != 7);
+        while(choice != 8);
         s.close();
     }
 }

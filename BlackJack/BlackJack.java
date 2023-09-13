@@ -1,7 +1,5 @@
 package BlackJack;
 
-import java.util.*;
-
 interface BlackJack {
 	void shuffle();
 	
