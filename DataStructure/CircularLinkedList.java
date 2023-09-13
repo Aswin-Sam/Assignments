@@ -1,80 +1,93 @@
-package Assignment1.DataStructure;
+package DataStructure;
 
 import java.util.Scanner;
 
-public class DoublyLinkedList {
-    private class Node {
+public class CircularLinkedList {
+    private class Node{
         Integer data;
         Node next;
-        Node prev;
-
+    
         Node(Integer data) {
             this.data = data;
             next = null;
-            prev = null;
         }
     }
-
     Node head,tail;
     Integer size;
 
-    DoublyLinkedList() {
-        head = null;
-        tail = null;
+    CircularLinkedList(){
+        head = tail = null;
         size = 0;
     }
 
-    void add(Integer val) {
+    void add(Integer val){
         Node newNode = new Node(val);
-        if (head == null) {
+        if(head == null){
             head = newNode;
-        } else {
+            newNode.next = head;
+        }
+        else{
             Node temp = head;
-            while (temp.next != null) {
+            while(temp != tail){
                 temp = temp.next;
             }
             temp.next = newNode;
-            newNode.prev = temp;
+            newNode.next = head;
         }
         tail = newNode;
-        
         size++;
     }
 
-    void delete(Integer val) {
-        if (head == null) {
+    void delete(Integer val){
+        if(head == null){
             System.out.println("THE LIST IS EMPTY");
-        } else {
-            if (head.data == val) {
-                head = head.next;
-                head.prev = null;
-            } else {
-                Node temp = head;
-
-                while (temp.next != null && temp.next.data != val) {
+            return;
+        }
+        else{
+            if(head.data == val){
+                if(head.next == head){
+                    head = tail = null;
+                    return;
+                }
+                else{
+                    head = head.next;
+                    tail.next = head;
+                }
+            }
+            else if(tail.data == val){
+                Node temp = head.next;
+                while(temp.next != tail){
+                    temp = temp.next;
+                }
+                temp.next = head;
+                tail = temp;
+            }
+            else{
+                Node temp = head.next;
+                
+                while(temp.next != tail && temp.next.data != val){
                     temp = temp.next;
                 }
 
-                if (temp.next != null) {
-                    if (temp.next.data != val) {
-                        System.out.println("THE ELEMENT IS NOT PRESENT IN THE LIST");
-                        return;
-                    } else {
-                        temp.next = temp.next.next;
-                        temp.next.prev = temp;
-                        System.out.println("THE ELEMENT HAS BEEN DELETED");
-                    }
+                if(temp.next.data != val){
+                    System.out.println("THE ENETERED ELEMENT IS NOT PRESENT IN THE LIST");
+                    return;
+                }
+                else{
+                    temp.next = temp.next.next;
                 }
             }
         }
-
         size--;
+        System.out.println("THE ELEMENT HAS BEEN DELETED");
     }
 
     Boolean find(Integer val) {
-        Node temp = head;
+        if(head.data == val) return true;
+        
+        Node temp = head.next;
 
-        while (temp != null) {
+        while (temp != head) {
             if (temp.data == val)
                 return true;
 
@@ -85,62 +98,61 @@ public class DoublyLinkedList {
     }
 
     void reverse() {
+        Node next = null;
+        Node prev = null;
         Node current = head;
-        Node next = null, prev = null;
-
-        while (current != null) {
+        Node temp = head;
+        while (current != tail) {
             next = current.next;
             current.next = prev;
             prev = current;
             current = next;
         }
         head = prev;
-        current = head;
-        current.prev = null;
-        prev = null;
-        while(current.next != null){
-            prev = current;
-            current = current.next;
-            current.prev = prev;
-        }
+        tail.next = head;
+        head = tail;
+        tail = temp;
+        tail.next = head;
     }
 
     void insert(Integer position, Integer val) {
         if (position > size) {
             System.out.println("ENTER A VALID POSITION");
-        } else {
+        }
+        else if(position == 1){
+            Node newNode = new Node(val);
+            newNode.next = head;
+            head = newNode;
+            tail.next = head;
+            size++;
+        }
+        else {
             Node newNode = new Node(val);
             Node temp = head;
             while (position-- > 2) {
                 temp = temp.next;
             }
             newNode.next = temp.next;
-            temp.next.prev = newNode;
             temp.next = newNode;
-            newNode.prev = temp;
             size++;
             System.out.println("THE ELEMENT HAS BEEN INSERTED");
         }
     }
 
-    void display() {
+    void display(){
         Node temp = head;
-        if(head == null){
-            System.out.println("THE LIST IS EMPTY");
-            return;
+        if(temp != null){
+            System.out.print(temp.data+" ");
+            temp = temp.next;
         }
-        if (head != null) {
-            while (temp != null) {
-                System.out.print(temp.data + " ");
-                temp = temp.next;
-            }
-        } else {
-            System.out.println("LIST IS EMPTY");
+        while(temp != null && temp != head){
+            System.out.print(temp.data+" ");
+            temp = temp.next;
         }
     }
 
     public static void main(String[] args) {
-        DoublyLinkedList l1 = new DoublyLinkedList();
+        CircularLinkedList l1 = new CircularLinkedList();
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{

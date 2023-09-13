@@ -1,9 +1,12 @@
-package Assignment1.DataStructure;
+package DataStructure;
 
-import java.util.Scanner;
+import java.util.Scanner;;
 
-public class CircularLinkedList {
-    private class Node{
+
+public class SinglyLinkedList {
+    Node head;
+    Integer size;
+    private class Node {
         Integer data;
         Node next;
     
@@ -12,82 +15,57 @@ public class CircularLinkedList {
             next = null;
         }
     }
-    Node head,tail;
-    Integer size;
 
-    CircularLinkedList(){
-        head = tail = null;
+    SinglyLinkedList() {
+        head = null;
         size = 0;
     }
 
-    void add(Integer val){
+    void add(Integer val) {
         Node newNode = new Node(val);
-        if(head == null){
+        if (head == null) {
             head = newNode;
-            newNode.next = head;
-        }
-        else{
+        } else {
             Node temp = head;
-            while(temp != tail){
+            while (temp.next != null) {
                 temp = temp.next;
             }
             temp.next = newNode;
-            newNode.next = head;
         }
-        tail = newNode;
+
         size++;
     }
 
-    void delete(Integer val){
-        if(head == null){
+    void delete(Integer val) {
+        if (head == null) {
             System.out.println("THE LIST IS EMPTY");
-            return;
-        }
-        else{
-            if(head.data == val){
-                if(head.next == head){
-                    head = tail = null;
-                    return;
-                }
-                else{
-                    head = head.next;
-                    tail.next = head;
-                }
-            }
-            else if(tail.data == val){
-                Node temp = head.next;
-                while(temp.next != tail){
-                    temp = temp.next;
-                }
-                temp.next = head;
-                tail = temp;
-            }
-            else{
-                Node temp = head.next;
-                
-                while(temp.next != tail && temp.next.data != val){
-                    temp = temp.next;
-                }
+        } else {
+            if (head.data == val) {
+                head = head.next;
+            } else {
+                Node temp = head;
 
-                if(temp.next.data != val){
-                    System.out.println("THE ENETERED ELEMENT IS NOT PRESENT IN THE LIST");
-                    return;
+                while (temp.next != null && temp.next.data != val) {
+                    temp = temp.next;
                 }
-                else{
-                    temp.next = temp.next.next;
+                if (temp.next != null) {
+                    if (temp.next.data != val) {
+                        System.out.println("THE ELEMENT IS NOT PRESENT IN THE LIST");
+                        return;
+                    } else{
+                        temp.next = temp.next.next;
+                        System.out.println("THE ELEMENT HAS BEEN DELETED");
+                    }
                 }
             }
         }
         size--;
-        System.out.println("THE ELEMENT HAS BEEN DELETED");
     }
 
     Boolean find(Integer val) {
-        if(head.data == val) return true;
-        
-        Node temp = head.next;
+        Node temp = head;
 
-        while (temp != head) {
+        while (temp != null) {
             if (temp.data == val)
                 return true;
 
@@ -101,29 +79,25 @@ public class CircularLinkedList {
         Node next = null;
         Node prev = null;
         Node current = head;
-        Node temp = head;
-        while (current != tail) {
+
+        while (current != null) {
             next = current.next;
             current.next = prev;
             prev = current;
             current = next;
         }
         head = prev;
-        tail.next = head;
-        head = tail;
-        tail = temp;
-        tail.next = head;
     }
 
     void insert(Integer position, Integer val) {
         if (position > size) {
             System.out.println("ENTER A VALID POSITION");
-        }
+            return;
+        } 
         else if(position == 1){
             Node newNode = new Node(val);
             newNode.next = head;
             head = newNode;
-            tail.next = head;
             size++;
         }
         else {
@@ -135,24 +109,37 @@ public class CircularLinkedList {
             newNode.next = temp.next;
             temp.next = newNode;
             size++;
-            System.out.println("THE ELEMENT HAS BEEN INSERTED");
         }
+        System.out.println("THE ELEMENT HAS BEEN INSERTED");
     }
 
-    void display(){
-        Node temp = head;
-        if(temp != null){
-            System.out.print(temp.data+" ");
-            temp = temp.next;
+    void swap(Integer element1,Integer element2){
+        Node firstElement = head, secondElement = head;
+
+        while (firstElement.data != element1) {
+            firstElement = firstElement.next;
         }
-        while(temp != null && temp != head){
-            System.out.print(temp.data+" ");
+        while (secondElement.data != element2) {
+            secondElement = secondElement.next;
+        }
+
+
+    }
+
+    void display() {
+        Node temp = head;
+        if (temp == null) {
+            System.out.println("Nothing to display");
+            return;
+        }
+        while (temp != null) {
+            System.out.print(temp.data + " ");
             temp = temp.next;
         }
     }
 
     public static void main(String[] args) {
-        CircularLinkedList l1 = new CircularLinkedList();
+        SinglyLinkedList l1 = new SinglyLinkedList();
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{

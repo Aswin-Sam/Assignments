@@ -1,23 +1,26 @@
-package Assignment1.DataStructure;
+package DataStructure;
 
-import java.util.Scanner;;
+import java.util.Scanner;
 
-
-public class SinglyLinkedList {
-    Node head;
-    Integer size;
+public class DoublyLinkedList {
     private class Node {
         Integer data;
         Node next;
-    
+        Node prev;
+
         Node(Integer data) {
             this.data = data;
             next = null;
+            prev = null;
         }
     }
 
-    SinglyLinkedList() {
+    Node head,tail;
+    Integer size;
+
+    DoublyLinkedList() {
         head = null;
+        tail = null;
         size = 0;
     }
 
@@ -31,8 +34,10 @@ public class SinglyLinkedList {
                 temp = temp.next;
             }
             temp.next = newNode;
+            newNode.prev = temp;
         }
-
+        tail = newNode;
+        
         size++;
     }
 
@@ -42,23 +47,27 @@ public class SinglyLinkedList {
         } else {
             if (head.data == val) {
                 head = head.next;
+                head.prev = null;
             } else {
                 Node temp = head;
 
                 while (temp.next != null && temp.next.data != val) {
                     temp = temp.next;
                 }
+
                 if (temp.next != null) {
                     if (temp.next.data != val) {
                         System.out.println("THE ELEMENT IS NOT PRESENT IN THE LIST");
                         return;
-                    } else{
+                    } else {
                         temp.next = temp.next.next;
+                        temp.next.prev = temp;
                         System.out.println("THE ELEMENT HAS BEEN DELETED");
                     }
                 }
             }
         }
+
         size--;
     }
 
@@ -76,9 +85,8 @@ public class SinglyLinkedList {
     }
 
     void reverse() {
-        Node next = null;
-        Node prev = null;
         Node current = head;
+        Node next = null, prev = null;
 
         while (current != null) {
             next = current.next;
@@ -87,59 +95,52 @@ public class SinglyLinkedList {
             current = next;
         }
         head = prev;
+        current = head;
+        current.prev = null;
+        prev = null;
+        while(current.next != null){
+            prev = current;
+            current = current.next;
+            current.prev = prev;
+        }
     }
 
     void insert(Integer position, Integer val) {
         if (position > size) {
             System.out.println("ENTER A VALID POSITION");
-            return;
-        } 
-        else if(position == 1){
-            Node newNode = new Node(val);
-            newNode.next = head;
-            head = newNode;
-            size++;
-        }
-        else {
+        } else {
             Node newNode = new Node(val);
             Node temp = head;
             while (position-- > 2) {
                 temp = temp.next;
             }
             newNode.next = temp.next;
+            temp.next.prev = newNode;
             temp.next = newNode;
+            newNode.prev = temp;
             size++;
+            System.out.println("THE ELEMENT HAS BEEN INSERTED");
         }
-        System.out.println("THE ELEMENT HAS BEEN INSERTED");
-    }
-
-    void swap(Integer element1,Integer element2){
-        Node firstElement = head, secondElement = head;
-
-        while (firstElement.data != element1) {
-            firstElement = firstElement.next;
-        }
-        while (secondElement.data != element2) {
-            secondElement = secondElement.next;
-        }
-
-
     }
 
     void display() {
         Node temp = head;
-        if (temp == null) {
-            System.out.println("Nothing to display");
+        if(head == null){
+            System.out.println("THE LIST IS EMPTY");
             return;
         }
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
+        if (head != null) {
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+        } else {
+            System.out.println("LIST IS EMPTY");
         }
     }
 
     public static void main(String[] args) {
-        SinglyLinkedList l1 = new SinglyLinkedList();
+        DoublyLinkedList l1 = new DoublyLinkedList();
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{
