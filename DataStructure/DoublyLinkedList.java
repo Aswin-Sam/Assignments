@@ -54,15 +54,27 @@ public class DoublyLinkedList {
                 while (temp.next != null && temp.next.data != val) {
                     temp = temp.next;
                 }
-
                 if (temp.next != null) {
                     if (temp.next.data != val) {
                         System.out.println("THE ELEMENT IS NOT PRESENT IN THE LIST");
                         return;
                     } else {
-                        temp.next = temp.next.next;
-                        temp.next.prev = temp;
-                        System.out.println("THE ELEMENT HAS BEEN DELETED");
+                        if(temp.next.next == null) {
+                            Node element = temp.next;
+                            element.prev = null;
+                            temp.next = null;
+                            tail = temp;
+                        }
+                        else{
+                            temp.next = temp.next.next;
+                            temp.next.prev = temp;
+                            System.out.println("THE ELEMENT HAS BEEN DELETED");
+                        }
+                    }
+                }
+                else{
+                    if(temp.data == val){
+
                     }
                 }
             }
