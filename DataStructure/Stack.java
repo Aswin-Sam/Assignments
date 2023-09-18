@@ -1,6 +1,6 @@
 package DataStructure;
 import java.util.Scanner;
-public class Stack {
+class stack {
     private class Node{
         Integer data;
         Node next;
@@ -13,7 +13,7 @@ public class Stack {
     Node head,top;
     Integer size;
 
-    Stack(){
+    stack(){
         head = top = null;
         size = 0;
     }
@@ -94,7 +94,7 @@ public class Stack {
     }
 
     public static void main(String[] args) {
-        Stack stk = new Stack();
+        stack stk = new stack();
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{

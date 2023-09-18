@@ -2,7 +2,7 @@ package DataStructure;
 
 import java.util.Scanner;
 
-public class Queue {
+class queue {
     private class Node{
         Integer data;
         Node next;
@@ -15,7 +15,7 @@ public class Queue {
     Node head;
     Integer size;
 
-    Queue(){
+    queue(){
         head = null;
         size = 0;
     }
@@ -84,7 +84,7 @@ public class Queue {
     }
 
     public static void main(String[] args) {
-        Queue q = new Queue();
+        queue q = new queue();
         Scanner s = new Scanner(System.in);
         Integer choice = 0,input;
         do{
