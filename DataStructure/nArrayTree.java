@@ -85,6 +85,33 @@ public class nArrayTree {
         return false;
     }
 
+    int height(){
+        int height = 0;
+
+        Queue<Node> q = new LinkedList<>();
+
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Node temp = q.poll();
+
+            if(temp == null){
+                height++;
+
+                if(!q.isEmpty()){
+                    q.add(null);
+                }
+
+                continue;
+            }
+
+            q.addAll(temp.children);
+        }
+
+        return height;
+    }
+
     void BFS() {
         Queue<Node> q = new LinkedList<>();
 
@@ -125,7 +152,7 @@ public class nArrayTree {
         int choice = 0,input = 0;
 
         do {
-            System.out.println("1.INSERT   2.DELETE   3.BFS   4.DFS   5.EXIT");
+            System.out.println("1.INSERT   2.DELETE   3.BFS   4.DFS   5.FIND_HEIGHT   6.EXIT");
             choice = s.nextInt();
 
             switch(choice){
@@ -156,9 +183,12 @@ public class nArrayTree {
                     System.out.println();
                     break;
                 case 5:
+                    System.out.println("THE HEIGHT OF THE TREE IS "+tree.height());
+                    break;
+                case 6:
                     break;
             }
-        } while (choice != 5);
+        } while (choice != 6);
 
         s.close();
     }
