@@ -50,7 +50,7 @@ public class nArrayTree {
                     root = temp;
                     return true;
                 }
-                
+
                 temp.children.addAll(root.children);
                 root = temp;
             }
@@ -65,19 +65,27 @@ public class nArrayTree {
                 Node temp = q.poll();
                 boolean contains = false;
                 int containsPosition = 0;
-                for(int i=0;i<temp.children.size();i++){
-                    if(temp.children.get(i).data == val){
+                for (int i = 0; i < temp.children.size(); i++) {
+                    if (temp.children.get(i).data == val) {
                         contains = true;
                         containsPosition = i;
                         break;
                     }
                 }
 
-                if(contains){
-                    temp.children.addAll(temp.children.get(containsPosition).children);
+                if (temp.children.get(containsPosition).children.isEmpty()){
                     temp.children.remove(containsPosition);
                     return true;
-                }                    
+                }
+
+                if (contains) {
+                    Node tempNode = temp.children.get(containsPosition);
+                    temp.children.add(tempNode.children.get(0));
+                    tempNode.children.remove(0);
+                    temp.children.get(temp.children.size()-1).children.addAll(tempNode.children);
+                    temp.children.remove(containsPosition);
+                    return true;
+                }
 
                 q.addAll(temp.children);
             }
@@ -85,7 +93,7 @@ public class nArrayTree {
         return false;
     }
 
-    int height(){
+    int height() {
         int height = 0;
 
         Queue<Node> q = new LinkedList<>();
@@ -96,10 +104,10 @@ public class nArrayTree {
         while (!q.isEmpty()) {
             Node temp = q.poll();
 
-            if(temp == null){
+            if (temp == null) {
                 height++;
 
-                if(!q.isEmpty()){
+                if (!q.isEmpty()) {
                     q.add(null);
                 }
 
@@ -149,13 +157,13 @@ public class nArrayTree {
         System.out.println("ENTER THE VALUE FOR N");
         tree.n = s.nextInt();
 
-        int choice = 0,input = 0;
+        int choice = 0, input = 0;
 
         do {
             System.out.println("1.INSERT   2.DELETE   3.BFS   4.DFS   5.FIND_HEIGHT   6.EXIT");
             choice = s.nextInt();
 
-            switch(choice){
+            switch (choice) {
                 case 1:
                     System.out.println("ENTER THE ELEMENT TO BE INSERTED");
                     input = s.nextInt();
@@ -165,10 +173,9 @@ public class nArrayTree {
                 case 2:
                     System.out.println("ENTER THE ELEMENT TO BE DELETED");
                     input = s.nextInt();
-                    if(tree.delete(input)){
+                    if (tree.delete(input)) {
                         System.out.println("THE ELEMENT HAS BEEN DELETED");
-                    }
-                    else{
+                    } else {
                         System.out.println("THE ENTERED ELEMENT IS NOT PRESENT IN THE TREE.");
                     }
                     break;
@@ -183,7 +190,7 @@ public class nArrayTree {
                     System.out.println();
                     break;
                 case 5:
-                    System.out.println("THE HEIGHT OF THE TREE IS "+tree.height());
+                    System.out.println("THE HEIGHT OF THE TREE IS " + tree.height());
                     break;
                 case 6:
                     break;
