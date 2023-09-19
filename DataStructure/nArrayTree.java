@@ -39,6 +39,35 @@ public class nArrayTree {
         }
     }
 
+    void insertAt(int node,int val){
+        if(root == null){
+            System.out.println("THE ENTERED NODE IS NOT PRESENT IN THE TREE.");
+            return;
+        }
+
+        Queue<Node> q = new LinkedList<>();
+
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            Node temp = q.poll();
+
+            if(temp.data == node){
+                if(temp.children.size() >= n){
+                    System.out.println("THERE IS NO SPACE TO ADD AN ELEMENT");
+                    return;
+                }
+
+                temp.children.add(new Node(val));
+                System.out.println("THE ELEMENT HAS BEEN INSERTED");
+                return;
+            }
+
+            q.addAll(temp.children);
+        }
+        System.out.println("THE ENTERED NODE IS NOT PRESENT IN THE TREE.");
+    }
+
     boolean delete(int val) {
         if (root.data == val) {
             if (root.children.isEmpty()) {
@@ -64,7 +93,7 @@ public class nArrayTree {
             while (!q.isEmpty()) {
                 Node temp = q.poll();
                 boolean contains = false;
-                int containsPosition = 0;
+                int containsPosition = -1;
                 for (int i = 0; i < temp.children.size(); i++) {
                     if (temp.children.get(i).data == val) {
                         contains = true;
@@ -73,7 +102,7 @@ public class nArrayTree {
                     }
                 }
 
-                if (temp.children.get(containsPosition).children.isEmpty()){
+                if (contains && temp.children.get(containsPosition).children.isEmpty()){
                     temp.children.remove(containsPosition);
                     return true;
                 }
@@ -160,7 +189,7 @@ public class nArrayTree {
         int choice = 0, input = 0;
 
         do {
-            System.out.println("1.INSERT   2.DELETE   3.BFS   4.DFS   5.FIND_HEIGHT   6.EXIT");
+            System.out.println("1.INSERT   2.DELETE   3.BFS   4.DFS   5.FIND_HEIGHT   6.INSERT_AT   7.EXIT");
             choice = s.nextInt();
 
             switch (choice) {
@@ -193,9 +222,16 @@ public class nArrayTree {
                     System.out.println("THE HEIGHT OF THE TREE IS " + tree.height());
                     break;
                 case 6:
+                    System.out.println("ENTER THE NODE:");
+                    int node = s.nextInt();
+                    System.out.println("ENTER THE ELEMENT:");
+                    input = s.nextInt();
+                    tree.insertAt(node, input);
+                    break;
+                case 7:
                     break;
             }
-        } while (choice != 6);
+        } while (choice != 7);
 
         s.close();
     }

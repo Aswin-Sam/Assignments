@@ -77,5 +77,6 @@ public class BST {
             }
         }
         while(choice != 4);
+        s.close();
     }
 }
