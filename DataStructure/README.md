@@ -15,3 +15,6 @@ STACK:
 ![Screenshot (341)](https://github.com/Aswin-Sam/Assignments/assets/110649612/ddbd9a4e-0e6b-4698-b23c-e6a78920149e)
 QUEUE:
 ![Screenshot (342)](https://github.com/Aswin-Sam/Assignments/assets/110649612/3618c42a-b30c-480d-9481-214713e58351)
+N-Ary Tree:
+![Screenshot (170)](https://github.com/Aswin-Sam/Assignments/assets/110649612/440b6b4c-3819-4eff-b317-c2f844624987)
+![Screenshot (171)](https://github.com/Aswin-Sam/Assignments/assets/110649612/f328867a-9b75-460b-992d-aaba5edd0b54)
