@@ -23,29 +23,6 @@ public class Graph {
         }
     }
 
-    void add(int node,int data){
-        if(origin == null){
-            add(data);
-        }
-
-        Queue<Node> q = new LinkedList<>();
-
-        q.add(origin);
-
-        while (!q.isEmpty()) {
-            Node temp = q.poll();
-
-            if(temp.data == node){
-                Node n = new Node(data);
-                temp.adj.add(n);
-                visited.put(n,false);
-                return;
-            }
-
-            q.addAll(temp.adj);
-        }
-        System.out.println("ELEMENT NOT FOUND");
-    }
     void edge(int node1,int node2){
         Node n1=null,n2=null;
 
@@ -179,7 +156,7 @@ public class Graph {
             switch(choice){
                 case 1:
                     System.out.println("ENTER THE EDGES TO BE CONNECTED");
-                    g.add(s.nextInt(),s.nextInt());
+                    g.edge(s.nextInt(),s.nextInt());
                     break;
                 case 2:
                     System.out.println("ENTER THE ORIGIN");
