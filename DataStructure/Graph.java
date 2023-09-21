@@ -11,6 +11,7 @@ public class Graph {
     }
     Node origin;
     HashMap<Node,Boolean>visited = new HashMap<>();
+    ArrayList<Node>listOfNodes = new ArrayList<>();
     Graph(){
         origin = null;
     }
@@ -20,28 +21,21 @@ public class Graph {
             Node n = new Node(data);
             origin = n;
             visited.put(origin,false);
+            listOfNodes.add(origin);
         }
     }
 
     void edge(int node1,int node2){
         Node n1=null,n2=null;
 
-        Queue<Node> q = new LinkedList<>();
-
-        q.add(origin);
-
-        while (!q.isEmpty()) {
-            Node temp = q.poll();
-
-            if(temp.data == node1){
-                n1 = temp;
+        for(int i=0;i<listOfNodes.size();i++){
+            if(listOfNodes.get(i).data == node1){
+                n1 = listOfNodes.get(i);
             }
 
-            if(temp.data == node2){
-                n2 = temp;
+            if(listOfNodes.get(i).data == node2){
+                n2 = listOfNodes.get(i);
             }
-
-            q.addAll(temp.adj);
         }
         if(n1 != null && n2 != null){
             n1.adj.add(n2);
@@ -50,11 +44,13 @@ public class Graph {
             Node newNode = new Node(node1);
             visited.put(newNode,false);
             newNode.adj.add(n2);
+            listOfNodes.add(newNode);
         }
         else if(n2 == null){
             Node newNode = new Node(node2);
             visited.put(newNode,false);
             n1.adj.add(newNode);
+            listOfNodes.add(newNode);
         }
     }
 
@@ -66,28 +62,14 @@ public class Graph {
 
     void BFS(int originValue){
         Node currentOrigin = null;
-        Queue<Node> q = new LinkedList<>();
-        q.add(origin);
-        visited.put(origin,true);
-        while(!q.isEmpty()){
-            Node temp = q.poll();
-
-            if(temp.data == originValue){
-                currentOrigin = temp;
-                break;
-            }
-
-            for(int i=0;i<temp.adj.size();i++){
-                if(!visited.get(temp.adj.get(i))){
-                    visited.put(temp.adj.get(i),true);
-                    q.add(temp.adj.get(i));
-                }
+        for(int i=0;i<listOfNodes.size();i++){
+            if(listOfNodes.get(i).data == originValue){
+                currentOrigin = listOfNodes.get(i);
             }
         }
         if(currentOrigin == null) return;
-
-        q.clear();
-        reset();
+              
+        Queue<Node> q = new LinkedList<>();
         q.add(currentOrigin);
         visited.put(currentOrigin,true);
         while (!q.isEmpty()) {
@@ -106,26 +88,13 @@ public class Graph {
 
     void DFS(int originValue){
         Node currentOrigin = null;
-        Queue<Node> q = new LinkedList<>();
-        q.add(origin);
-        visited.put(origin,true);
-        while(!q.isEmpty()){
-            Node temp = q.poll();
-
-            if(temp.data == originValue){
-                currentOrigin = temp;
-                break;
-            }
-            
-            for(int i=0;i<temp.adj.size();i++){
-                if(!visited.get(temp.adj.get(i))){
-                    visited.put(temp.adj.get(i),true);
-                    q.add(temp.adj.get(i));
-                }
+        for(int i=0;i<listOfNodes.size();i++){
+            if(listOfNodes.get(i).data == originValue){
+                currentOrigin = listOfNodes.get(i);
             }
         }
         if(currentOrigin == null) return;
-        reset();
+        
         Stack<Node> stk = new Stack<>();
         System.out.println(currentOrigin.data);
         stk.push(currentOrigin);
