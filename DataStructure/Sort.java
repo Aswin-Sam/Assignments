@@ -87,6 +87,44 @@ public class Sort {
         }
     }
 
+    void merge(Integer arr[],Integer start,Integer end,Integer mid){
+        if (start==(end-1)){
+            if(arr[start]>arr[end]){
+                Integer temp=arr[start];
+                arr[start]=arr[end];
+                arr[end]=temp;
+                return;
+            }
+
+        }
+        else{
+            Integer mid1=mid+1;
+            while(start<=mid1 && mid1<=end){
+                if(arr[start]>arr[mid1]){
+                    Integer temp=arr[mid1];
+                    for(Integer i=mid1;i>start;i--){
+                        arr[i]=arr[i-1];
+                    }
+                    arr[start]=temp;
+                    start++;
+                    mid1++;
+                }
+                else{
+                    start++;
+                }
+            }
+        }
+    }
+    void mergesort(Integer arr[],Integer start,Integer end){
+        if (start<end){
+            Integer mid = (start+end)/2;
+            mergesort(arr, start, mid);
+            mergesort(arr, mid+1, end);
+            merge(arr, start, end,mid);
+        }
+
+    }
+
     public static void main(String[] args) {
         Sort srt = new Sort();
         Scanner s = new Scanner(System.in);
