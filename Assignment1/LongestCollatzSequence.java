@@ -3,7 +3,7 @@ public class LongestCollatzSequence{
     public static void main(String[] args) {
         long max = 0;
         long startingTerm = 0;
-        for(long i=1;i<=1000000;i++){
+        for(long i=1;i<=10000000;i++){
             long n = i;
             long count = 1;
 

@@ -11,6 +11,7 @@ public class maskPattern {
             for(int j=i;j<n-1;j++){
                 System.out.print(" ");
             }
+
             for(int j=i;j<n-1;j++){
                 System.out.print(" ");
             }
