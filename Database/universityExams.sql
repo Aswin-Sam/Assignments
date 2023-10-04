@@ -21,8 +21,10 @@ exam_time time,
 room_no int,
 course_no int,
 exam_date date,
+student_id int,
 foreign key (room_no) references room(room_no),
-foreign key(course_no) references course(course_no)
+foreign key(course_no) references course(course_no),
+foreign key(student_id) references student(student_id)
 );
 
 create table department(
